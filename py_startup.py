@@ -33,24 +33,32 @@ try:
     # ext_sales()
     # ext_times()
     
-    # check=process_etl()
+    # process_num=process_etl()
+    # print("Número de proceso",process_num)
+    # tra_channels(process_num)
+    # tra_countries(process_num)
+    # tra_products(process_num)
+    # tra_promotions(process_num)
+    # tra_sales(process_num) 
+    # tra_times(process_num)
+    # tra_customers(process_num)
 
-    # tra_channels(check)
-    # tra_countries(check)
-    # tra_products(check)
-    # tra_promotions(check)
-    # tra_sales(check) 
-    # tra_times(check)
-    # tra_customers(check)
+    # # LOAD
+    # load_channels(process_num)
+    # load_countries(process_num)
+    # load_customers(process_num)
+    # load_products(process_num)
+    # load_promotions(process_num)
+    # load_times(2)
+    load_sales(1)
 
-    # LOAD
-    # load_channels(2)
+    # load_channels(1)
     # load_countries(1)
     # load_customers(1)
     # load_products(1)
     # load_promotions(1)
-    load_sales(1)
-    # load_times(2)
+    # load_times(1)
+    
 
 except:
     traceback.print_exc()

@@ -54,28 +54,27 @@ def load_sales(process):
         sal_sor.to_dict()
 
         pro_sor=pd.read_sql(f"SELECT ID, PROD_ID FROM PRODUCTS", ses_db_sor)
-        cus_sor=pd.read_sql(f"SELECT ID, CUST_ID FROM CUSTOMERS", ses_db_sor)
-        cha_sor=pd.read_sql(f"SELECT ID, CHANNEL_ID FROM CHANNELS", ses_db_sor)
-        prom_sor=pd.read_sql(f"SELECT ID, PROMO_ID FROM PROMOTIONS", ses_db_sor)
-
         pro_dict=dict()
         if not pro_sor.empty:
             for id, pro_id \
                 in zip(pro_sor['ID'], pro_sor['PROD_ID']):
                 pro_dict[pro_id] = id
 
+        cus_sor=pd.read_sql(f"SELECT ID, CUST_ID FROM CUSTOMERS", ses_db_sor)
         cus_dict=dict()
         if not cus_sor.empty:
             for id, cus_id \
                 in zip(cus_sor['ID'],cus_sor['CUST_ID']):
                 cus_dict[cus_id] = id
 
+        cha_sor=pd.read_sql(f"SELECT ID, CHANNEL_ID FROM CHANNELS", ses_db_sor)
         cha_dict=dict()
         if not cha_sor.empty:
             for id, ch_id \
                 in zip(cha_sor['ID'],cha_sor['CHANNEL_ID']):
                 cha_dict[ch_id] = id
 
+        prom_sor=pd.read_sql(f"SELECT ID, PROMO_ID FROM PROMOTIONS", ses_db_sor)
         prom_dict=dict()
         if not prom_sor.empty:
             for id, prom_id \
@@ -89,7 +88,7 @@ def load_sales(process):
                 sal_tra['TIME_ID'], sal_tra['CHANNEL_ID'],
                 sal_tra['PROMO_ID'],sal_tra['QUANTITY_SOLD'],
                 sal_tra['AMOUNT_SOLD']):
-                sal_dict["PROD_ID"].append(pro_dict[pro])
+                sal_dict["PROD_ID"].append(pro_dict[int(pro)])
                 sal_dict["CUST_ID"].append(cus_dict[cus])
                 sal_dict["TIME_ID"].append(tim)
                 sal_dict["CHANNEL_ID"].append(cha_dict[cha])
@@ -100,8 +99,9 @@ def load_sales(process):
 
         if sal_dict['PROD_ID']:
             df_sal=pd.DataFrame(sal_dict)
-            df_sal.to_sql('sales',ses_db_sor,if_exists='append',index=False)
-            # merge(table_name='channels', natural_key_cols=['channel_id'], dataframe= df_cha, db_context=ses_db_sor);
+            # df_sal.to_sql('sales',ses_db_sor,if_exists='append',index=False)
+            sal_merge = df_sal.merge(sal_sor, indicator='i', how='outer').query('i == "left_only"').drop('i', axis=1)
+            sal_merge.to_sql('sales', ses_db_sor, if_exists="append",index=False)
     except:
         traceback.print_exc()
     finally:

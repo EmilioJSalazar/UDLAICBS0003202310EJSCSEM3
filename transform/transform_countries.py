@@ -22,9 +22,6 @@ def tra_countries(process):
         elif ses_db_stg == -2:
             raise Exception("Error trying to connect to the b2b_dwh_staging database")
 
-        df=pd.read_sql('SELECT USER()',ses_db_stg)
-        print(df)
-
         #Dictionary dfor values of channels_ext
         cou_tra_dict = {
             "country_id":[],
