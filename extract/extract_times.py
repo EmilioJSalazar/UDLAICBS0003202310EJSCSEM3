@@ -32,7 +32,7 @@ def ext_times():
             "calendar_month_desc":[],
             "end_of_cal_month":[],
             "calendar_quarter_desc":[],
-            "calendar_year":[],
+            "calendar_year":[]
         }
 
         #Reading the CSV file

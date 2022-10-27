@@ -38,7 +38,7 @@ def ext_sales():
 
         #Processing the CSV file content
         if not sale_csv.empty:
-            for pro,cus,tim,cha,pro,qua,amo \
+            for pro,cus,tim,cha,prom,qua,amo \
                 in zip(sale_csv['PROD_ID'],sale_csv['CUST_ID'],
                 sale_csv['TIME_ID'], sale_csv['CHANNEL_ID'],
                 sale_csv['PROMO_ID'],sale_csv['QUANTITY_SOLD'],
@@ -47,7 +47,7 @@ def ext_sales():
                 sale_dict["cust_id"].append(cus)
                 sale_dict["time_id"].append(tim)
                 sale_dict["channel_id"].append(cha)
-                sale_dict["promo_id"].append(pro)
+                sale_dict["promo_id"].append(prom)
                 sale_dict["quantity_sold"].append(qua)
                 sale_dict["amount_sold"].append(amo)
         if sale_dict['prod_id']:
